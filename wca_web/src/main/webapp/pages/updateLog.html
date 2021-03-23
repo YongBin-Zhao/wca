@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="../static/js/vue.js"></script>
+
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/js/index.js"></script>
+
+</head>
+<body>
+<div id="app">
+
+    <!--日志菜单 后期数据需要从数据库读取 从后台输入-->
+    <el-timeline>
+        <el-timeline-item timestamp="2021/3/19" placement="top">
+            <el-card>
+                <h4>搭建后端</h4>
+                <p>确定了基本模块</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2021/3/20" placement="top">
+            <el-card>
+                <h4>修改前端页面</h4>
+                <p>使用VUE+elementUI</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2021/3/21" placement="top">
+            <el-card>
+                <h4>选手详情页</h4>
+                <p>下拉菜单地区处理,选手所有信息</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2021/3/21" placement="top">
+            <el-card>
+                <h4>开发规范</h4>
+                <p>修改命名,结果集处理,网页名称</p>
+            </el-card>
+        </el-timeline-item>
+    </el-timeline>
+
+</div>
+
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {},
+        methods: {}
+    })
+</script>
+</html>

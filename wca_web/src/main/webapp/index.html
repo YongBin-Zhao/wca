@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>一站式MF</title>
+
+	<!--vue插件-->
+    <script type="text/javascript" src="./static/js/vue.js"></script>
+
+	<!--iframeResizer实现自动高度插件-->
+<!--	<script type="text/javascript" src="./static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="./static/js/iframeResizer.min.js"></script>-->
+
+
+	<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+
+	<!--elementUI本地插件-->
+    <link rel="stylesheet" href="./static/css/index.css">
+    <script src="./static/js/index.js"></script>
+
+
+    <!--指定网页图标-->
+    <link rel="icon" href="static/img/items/333bf.ico">
+
+	<!--容器样式-->
+    <style>
+        .el-header,
+        .el-footer { /* 头尾的颜色 */
+            background-color: #a4c2f4;
+            color: #333;
+            text-align: center;
+            line-height: 60px;
+        }
+
+
+        .el-main {
+            background-color: #E9EEF3;
+            color: #333;
+            text-align: center;
+            line-height: 160px;
+        }
+
+        body > .el-container {
+            margin-bottom: 40px;
+        }
+
+        .el-container:nth-child(5) .el-aside,
+        .el-container:nth-child(6) .el-aside {
+            line-height: 260px;
+        }
+
+        .el-container:nth-child(7) .el-aside {
+            line-height: 320px;
+        }
+
+        /* 导航菜单项居左 */
+        .el-menu--horizontal > .el-menu-item {
+            float: right;
+        }
+
+        /* 导航菜单项居左 */
+        .el-menu--horizontal > .el-submenu {
+            float: right;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <!-- 头区域 -->
+        <el-header>
+
+            <!-- 导航菜单 -->
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                     background-color="#a4c2f4" text-color="#545c64">
+                <span>一站式MF</span>
+				<!--index会自动传入handleSelect方法-->
+                <el-submenu index="1">
+                    <template slot="title">账号设置</template>
+                    <el-menu-item index="1-1">修改密码</el-menu-item>
+                    <el-menu-item index="1-2">报名设置</el-menu-item>
+                    <el-menu-item index="1-3">退出</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="2">趣味统计</el-menu-item>
+                <el-menu-item index="3">魔方计时</el-menu-item>
+                <el-submenu index="4">
+                    <template slot="title">公式</template>
+                    <el-menu-item index="4-1">盲拧记忆</el-menu-item>
+                    <el-menu-item index="4-2">彳亍公式</el-menu-item>
+                    <el-menu-item index="4-3">CFOP</el-menu-item>
+                </el-submenu>
+                <el-submenu index="5">
+                    <template slot="title">教学视频</template>
+                    <el-menu-item index="5-1">三阶基础</el-menu-item>
+                    <el-menu-item index="5-2">三阶盲拧</el-menu-item>
+                    <el-menu-item index="5-3">枫叶魔方</el-menu-item>
+                </el-submenu>
+
+                <el-submenu index="6">
+                    <template slot="title">成绩查询</template>
+                    <el-menu-item index="players">选手</el-menu-item>
+                    <el-menu-item index="6-2">排名</el-menu-item>
+                    <el-menu-item index="6-3">预测排名</el-menu-item>
+                </el-submenu>
+
+                <el-menu-item index="main">首页</el-menu-item>
+            </el-menu>
+
+
+        </el-header>
+        <el-container>
+
+            <el-container>
+                <el-main>
+
+                    <!--包含子网页  frameBorder取消边框-->
+                    <iframe id="iframe" :src="url" name="iframe"
+                            height="1400px"
+                            width="90%" frameBorder="false"></iframe>
+
+
+                </el-main>
+				<!--页尾-->
+                <el-footer>© 2021 ZYB Inc. All rights reserved.</el-footer>
+            </el-container>
+        </el-container>
+    </el-container>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+		/*activeIndex初始位置 url初始子网页*/
+        data: {
+            activeIndex: '1',
+            url: './pages/main.html'
+        },
+        created() {/*钩子函数,vue挂载对象前执行*/
+        },
+        methods: {
+        	/*导航菜单点击事件的方法*/
+            handleSelect(index, keyPath) {
+            	/*点击后 修改当前子网页url路径 实现跳转*/
+                this.url = './pages/' + index + '.html'
+            }
+        }
+    });
+</script>
+
+
+</html>

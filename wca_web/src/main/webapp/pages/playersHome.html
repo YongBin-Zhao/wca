@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <!--VUE插件-->
+    <script type="text/javascript" src="../static/js/vue.js"></script>
+
+    <!--elementUI网络资源-->
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+
+
+    <!--elementUI本地插件-->
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/js/index.js"></script>
+
+    <!--使用axios代替ajax发送请求-->
+    <script src="../static/js/axios-0.18.0.js"></script>
+    <!--接收网页跳转携带的参数-->
+    <script src="../static/js/healthmobile.js"></script>
+
+    <script>
+        var id = getUrlParam("personId");
+    </script>
+
+</head>
+<body>
+<div id="app">
+
+
+    <el-container>
+        <el-header>
+            <h2 align="center">成绩主页  (Results Page)</h2>
+        </el-header>
+        <el-main>
+            <div align="center">
+                <el-image
+                        style="width: 200px; height: 180px"
+                        :src="src"></el-image>
+
+                <div style="margin: 30px 0;"></div>
+                <p><b>选手WCA id:</b>&nbsp;{{persons.id}} &nbsp;&nbsp;      <b>姓名:</b>&nbsp;{{persons.name}}</p>
+                <p><b>性别:</b>&nbsp;{{persons.gender}}   &nbsp;&nbsp;    <b>地区:</b>&nbsp;{{persons.countryId}}</p>
+                <p><b>参赛次数:</b>&nbsp;{{persons.matchCount}} &nbsp;&nbsp; <b>参赛经历:</b>&nbsp;{{persons.undergo}}</p>
+
+            </div>
+
+            <div style="margin: 60px 0;"></div>
+            <!--分割线-->
+            <el-divider content-position="left">成绩详情</el-divider>
+
+            <el-table
+                    :data="tableData"
+                    border
+                    align="center"
+                    style="width: 100%">
+                <el-table-column
+                        align="center"
+                        prop="eventId"
+                        label="项目"
+                        width="80">
+                    <template scope="scope">
+                        <span v-if="scope.row.eventId === 333" >{{scope.row.eventId}}</span>
+                        <span v-else-if="scope.row.eventId >= 10000" >{{scope.row.eventId}}</span>
+                        <span v-else >{{scope.row.eventId}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="pbCountry"
+                        label="地区排名"
+                        width="80">
+
+                  <template scope="scope">
+                    <span v-if="scope.row.pbCountry < 100" style="color: greenyellow">{{scope.row.pbCountry}}</span>
+                      <span v-else-if="scope.row.pbCountry >= 10000" style="color: red">{{scope.row.pbCountry}}</span>
+                  <span v-else >{{scope.row.pbCountry}}</span>
+                    </template>
+
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="pbContinent"
+                        label="洲际排名"
+                        width="80">
+
+                    <template scope="scope">
+                        <span v-if="scope.row.pbContinent < 100" style="color: greenyellow">{{scope.row.pbContinent}}</span>
+                        <span v-else-if="scope.row.pbContinent >= 10000" style="color: red">{{scope.row.pbContinent}}</span>
+                        <span v-else >{{scope.row.pbContinent}}</span>
+                    </template>
+                </el-table-column>
+
+                <el-table-column
+                        align="center"
+                        prop="pbWorld"
+                        label="世界排名"
+                        width="80">
+
+                    <template scope="scope">
+                        <span v-if="scope.row.pbWorld < 100" style="color: greenyellow">{{scope.row.pbWorld}}</span>
+                        <span v-else-if="scope.row.pbWorld >= 10000" style="color: red">{{scope.row.pbWorld}}</span>
+                        <span v-else >{{scope.row.pbWorld}}</span>
+                    </template>
+                </el-table-column>
+
+                <el-table-column
+                        align="center"
+                        prop="pbBast"
+                        label="单次"
+                        width="100">
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="avgBast"
+                        label="平均"
+                        width="80">
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="avgCountry"
+                        label="地区排名"
+                        width="80">
+                    <template scope="scope">
+                        <span v-if="scope.row.avgCountry < 100" style="color: greenyellow">{{scope.row.avgCountry}}</span>
+                        <span v-else-if="scope.row.avgCountry >= 10000" style="color: red">{{scope.row.avgCountry}}</span>
+                        <span v-else >{{scope.row.avgCountry}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="avgContinent"
+                        label="洲际排名"
+                        width="80">
+                    <template scope="scope">
+                        <span v-if="scope.row.avgContinent < 100" style="color: greenyellow">{{scope.row.avgContinent}}</span>
+                        <span v-else-if="scope.row.avgContinent >= 10000" style="color: red">{{scope.row.avgContinent}}</span>
+                        <span v-else >{{scope.row.avgContinent}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        align="center"
+                        prop="avgWorld"
+                        label="世界排名"
+                        width="80">
+                    <template scope="scope">
+                        <span v-if="scope.row.avgWorld < 100" style="color: greenyellow">{{scope.row.avgWorld}}</span>
+                        <span v-else-if="scope.row.avgWorld >= 10000" style="color: red">{{scope.row.avgWorld}}</span>
+                        <span v-else >{{scope.row.avgWorld}}</span>
+                    </template>
+                </el-table-column>
+            </el-table>
+
+
+        </el-main>
+        <el-footer></el-footer>
+    </el-container>
+
+
+</div>
+
+</body>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            /*选手详情信息*/
+            persons:{
+                id:'',
+                name:'',
+                countryId:'',
+                gender:'',
+                matchCount:0,
+                undergo:'',
+            },
+            src: '../static/img/zhao.jpg',
+            tableData: [],
+
+        },
+        //钩子函数，VUE对象初始化完成后自动执行
+        created() {
+
+            this.particulars()
+        },
+
+        methods: {
+            //通过id查询用户信息
+            particulars() {
+                axios.get("/particulars/all.do?id=" + id).then((resp) => {
+                    this.tableData = resp.data.data
+                    this.persons = resp.data.datas
+                });
+            },
+        }
+    });
+</script>
+</html>

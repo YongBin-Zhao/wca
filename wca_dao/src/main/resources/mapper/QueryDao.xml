@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyb.dao.QueryDao">
+
+
+    <!--洲的下拉选项数据-->
+    <select id="selectCountinents" resultType="com.zyb.pojo.FanYi">
+        select * from china_countinents
+    </select>
+
+    <!--地区的下拉选项数据-->
+    <select id="selectCountries" resultType="com.zyb.pojo.FanYi">
+         select * from china_countries
+    </select>
+
+
+    <!--世界条件查询-->
+    <select id="findPage" parameterType="string" resultType="com.zyb.pojo.Persons">
+        select * from persons
+        <where>
+            <if test="gender!=null and gender.length>0 ">
+                gender = #{gender}
+            </if>
+        </where>
+        <if test="queryString!=null and queryString.length>0">
+            HAVING name like "%"#{queryString}"%" or id like "%"#{queryString}"%"
+        </if>
+    </select>
+
+    <!--地区条件查询-->
+    <select id="countriesFindPage" parameterType="string" resultType="com.zyb.pojo.Persons">
+
+        select * from persons
+        <trim prefix="WHERE" prefixOverrides="AND|OR">/*生成头 和去除后缀多余and和or*/
+            <if test="gender!=null and gender.length>0">
+                gender = #{gender} AND
+            </if>
+            <if test="region!=null and region.length>0">
+                countryId = #{region}
+            </if>
+        </trim>
+        <if test="queryString!=null and queryString.length>0">
+            HAVING name like "%"#{queryString}"%" or id like "%"#{queryString}"%"
+        </if>
+
+    </select>
+
+
+    <!--洲条件查询-->
+    <select id="countinentsFindPage" parameterType="string" resultType="com.zyb.pojo.Persons">
+        select persons.id id, persons.`name` name ,persons.gender gender,persons.countryId countryId
+        from persons,countries
+        <trim prefix="WHERE" prefixOverrides="AND|OR">/*生成头 和去除后缀多余and和or*/
+            persons.countryId=countries.id AND
+            <if test="gender!=null and gender.length>0">
+                gender = #{gender} AND
+            </if>
+            <if test="region!=null and region.length>0">
+                continentId = "_"#{region}
+            </if>
+        </trim>
+        <if test="queryString!=null and queryString.length>0">
+            HAVING name like "%"#{queryString}"%" or id like "%"#{queryString}"%"
+        </if>
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyb.dao.ParticularsDao">
+
+    <!--选手所有项目成绩-->
+    <select id="allParticulars" parameterType="string" resultType="com.zyb.pojo.Items">
+
+        select  rankssingle.personId wcaId,rankssingle.EventId eventId, rankssingle.best pbBast,
+        rankssingle.worldRank pbWorld ,rankssingle.continentRank pbContinent,
+        rankssingle.countryRank pbCountry, ranksaverage.best avgBast,ranksaverage.worldRank avgWorld ,
+        ranksaverage.continentRank avgContinent,
+        ranksaverage.countryRank avgCountry
+        from    rankssingle left  JOIN   ranksaverage
+        on  ranksaverage.personId=rankssingle.personId
+        and  rankssingle.eventId=ranksaverage.eventId
+        where  rankssingle.personId = #{id}
+    </select>
+
+    <!--查询选手个人信息-->
+    <select id="onePerson" parameterType="string" resultType="com.zyb.pojo.Persons">
+         select * from persons where id = #{id} and subid = 1
+    </select>
+
+
+
+    <!--查询参赛经历-->
+    <select id="experience" parameterType="string" resultType="map">
+        SELECT  results.competitionId id,year,month,day	FROM results,competitions
+        WHERE results.competitionId=competitions.id and  results.personId=  #{id}
+	    GROUP BY competitions.id ORDER BY 	year,month,day
+    </select>
+
+
+</mapper>
