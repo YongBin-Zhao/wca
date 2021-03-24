@@ -28,8 +28,8 @@ public class ResultsFormat {
         }
 
         int difference = (DbValue - n) / 10000000;//成功个数与99的差值
-        int succeed = 99 - difference + lost;//还原个数
-        int sum  = succeed + lost;//挑战个数
+        int  succeed = 99 - difference + lost;//成功个数
+        int sum  = succeed + lost;//挑战个数=失败+成功个数
 
         return succeed + "/" + sum  + " " + min + ":" + sec;
     }
